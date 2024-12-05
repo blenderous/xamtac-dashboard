@@ -4,23 +4,13 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import {
-  Bar,
-  BarChart,
-  Cell,
-  Line,
-  LineChart,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "../components/ui/chart";
+import { Suspense } from "react";
+import { LineChartComponent } from "./dashboard/LineChart";
+import { BarChartComponent1 } from "./dashboard/BarChart1";
+import { PieChartComponent } from "./dashboard/PieChart";
+import { BarChartComponent2 } from "./dashboard/BarChart2";
+import { Skeleton } from "@/components/ui/skeleton";
+import { LoadingSkeleton } from "./dashboard/LoadingSkeleton";
 
 interface KPIData {
   title: string;
@@ -34,47 +24,6 @@ const kpiData: KPIData[] = [
   { title: "Sales", value: "12,234", change: "+19%" },
   { title: "Active Users", value: "573", change: "+201" },
 ];
-
-interface ChartData {
-  name: string;
-  value: number;
-}
-
-const lineChartData: ChartData[] = [
-  { name: "Jan", value: 100 },
-  { name: "Feb", value: 120 },
-  { name: "Mar", value: 170 },
-  { name: "Apr", value: 140 },
-  { name: "May", value: 200 },
-  { name: "Jun", value: 180 },
-];
-
-interface BarChartData {
-  name: string;
-  sales: number;
-}
-
-const barChartData: BarChartData[] = [
-  { name: "Product A", sales: 400 },
-  { name: "Product B", sales: 300 },
-  { name: "Product C", sales: 200 },
-  { name: "Product D", sales: 278 },
-  { name: "Product E", sales: 189 },
-];
-
-interface PieChartData {
-  name: string;
-  value: number;
-}
-
-const pieChartData: PieChartData[] = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 function Dashboard() {
   return (
@@ -97,127 +46,20 @@ function Dashboard() {
         ))}
       </div>
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue Over Time</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer
-              config={{
-                value: {
-                  label: "Revenue",
-                  color: "hsl(var(--chart-1))",
-                },
-              }}
-              className="h-[300px] w-full"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={lineChartData}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    stroke="var(--color-value)"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Sales by Product</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer
-              config={{
-                sales: {
-                  label: "Sales",
-                  color: "hsl(var(--chart-2))",
-                },
-              }}
-              className="h-[300px] w-full"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={barChartData}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="sales" fill="var(--color-sales)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <LineChartComponent />
+        </Suspense>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <BarChartComponent1 />
+        </Suspense>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Customer Segments</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer
-              config={{
-                value: {
-                  label: "Value",
-                  color: "hsl(var(--chart-3))",
-                },
-              }}
-              className="h-[300px] w-full"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={pieChartData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    fill="var(--color-value)"
-                    label
-                  >
-                    {pieChartData.map((_, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                </PieChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Monthly Expenses</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer
-              config={{
-                expenses: {
-                  label: "Expenses",
-                  color: "hsl(var(--chart-4))",
-                },
-              }}
-              className="h-[300px] w-full"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={barChartData}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="sales" fill="var(--color-expenses)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <PieChartComponent />
+        </Suspense>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <BarChartComponent2 />
+        </Suspense>
       </div>
     </div>
   );

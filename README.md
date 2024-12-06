@@ -1,50 +1,27 @@
-# React + TypeScript + Vite
+# Readme
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## How to setup local dev server
 
-Currently, two official plugins are available:
+Follow the below steps to run a local dev server serving the dashboard application:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Install packages using `npm install`
+- Install `json-server` globally by running `npm install -g json-server`
+- Run `npx json-server db.json` to start a database server on `localhost:3000`
+- On another terminal, `cd` into the folder of the project and run `npm run dev`
+- Open the development server on the url `http://localhost:5173/` to view the application
 
-## Expanding the ESLint configuration
+## Architechture
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The project uses `vite` bundler along with `json-server` for creating a fake backend to serve data.
+The application uses:
 
-- Configure the top-level `parserOptions` property like this:
+- `React.js` for front-end functionalities
+- `react-router-dom` for routing
+- `Typescript` to ensure type safety
+- `Tailwind CSS` for styling
+- `Shadcn` has been used to create interactive elements and overall look and feel of the application.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Known issues
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- The code for barchart with drilldown capability ignores type safety by using the `any` type.
+- The graphs are not responsive if the width of the screen is less than 768px.

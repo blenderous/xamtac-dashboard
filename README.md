@@ -21,8 +21,3 @@ The application uses:
 - `Typescript` to ensure type safety
 - `Tailwind CSS` for styling
 - `Shadcn` has been used to create interactive elements and overall look and feel of the application.
-
-## Known issues
-
-- The code for barchart with drilldown capability ignores type safety by using the `any` type at many places.
-- The graphs are not responsive if the width of the screen is less than 768px.

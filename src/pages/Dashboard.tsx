@@ -9,7 +9,6 @@ import { LineChartComponent } from "./dashboard/LineChart";
 import { BarChartComponent1 } from "./dashboard/BarChart1";
 import { PieChartComponent } from "./dashboard/PieChart";
 import { BarChartComponent2 } from "./dashboard/BarChart2";
-import { Skeleton } from "@/components/ui/skeleton";
 import { LoadingSkeleton } from "./dashboard/LoadingSkeleton";
 
 interface KPIData {
@@ -45,7 +44,7 @@ function Dashboard() {
           </Card>
         ))}
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Suspense fallback={<LoadingSkeleton />}>
           <LineChartComponent />
         </Suspense>
@@ -53,7 +52,7 @@ function Dashboard() {
           <BarChartComponent1 />
         </Suspense>
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Suspense fallback={<LoadingSkeleton />}>
           <PieChartComponent />
         </Suspense>

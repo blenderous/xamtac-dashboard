@@ -4,6 +4,7 @@
 
 Follow the below steps to run a local dev server serving the dashboard application:
 
+- Clone the project and `cd` into the project folder
 - Install packages using `npm install`
 - Install `json-server` globally by running `npm install -g json-server`
 - Run `npx json-server db.json` to start a database server on `localhost:3000`
@@ -23,5 +24,5 @@ The application uses:
 
 ## Known issues
 
-- The code for barchart with drilldown capability ignores type safety by using the `any` type.
+- The code for barchart with drilldown capability ignores type safety by using the `any` type at many places.
 - The graphs are not responsive if the width of the screen is less than 768px.
